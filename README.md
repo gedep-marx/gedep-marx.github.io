@@ -1,70 +1,49 @@
 # GEDEP — Grupo de Estudos em Direito e Economia Política
 
-Portal institucional, arquivo histórico, calendário, biblioteca e espaço de produção intelectual do GEDEP — UFBA.
+Site do GEDEP (Faculdade de Direito da UFBA), publicado pelo GitHub Pages. HTML, CSS e JavaScript puros: não há build, banco nem dependências.
 
-## Stack
+## Arquivos
 
-- Next.js 16 + TypeScript
-- Tailwind CSS 4
-- Neon PostgreSQL
-- Drizzle ORM
-- Neon Object Storage para anexos privados
+- `index.html` — início: quem somos, como atuamos, contato, mapa e calendário
+- `discurso.html` — Carta de Princípios
+- `registros.html` e `producao.html` — em construção
+- `estilo.css` — todo o visual
+- `site.js` — calendário e busca
+- `img/` — imagens recortadas do layout feito no Canva
 
-## Rotas
+## Atualizar os encontros
 
-- `/` — página inicial
-- `/sobre` — apresentação institucional
-- `/o-discurso` — Carta de Princípios
-- `/calendario` — calendário mensal e lista de eventos
-- `/encontros` — próximos encontros e encontros realizados
-- `/registros` e `/registros/[slug]` — arquivo histórico
-- `/biblioteca` — indicações bibliográficas
-- `/producoes` e `/producoes/[slug]` — publicações aprovadas
-- `/escreva` — envio privado de contribuições
-- `/contato` — canais institucionais
+No `index.html`, edite o atributo `data-encontros` (datas `AAAA-MM-DD` separadas por espaço):
 
-## Desenvolvimento
-
-Use Node.js 22 ou superior e pnpm.
-
-```bash
-pnpm install
-cp .env.example .env.local
-pnpm dev
+```html
+<div class="calendario" data-encontros="2026-11-19 2026-11-26"></div>
 ```
 
-O banco é definido em `db/schema.ts`. Gere novas migrações com:
+O calendário abre no mês do próximo encontro e marca cada data com uma estrela; a lista abaixo dele mostra só as datas que ainda não passaram.
+
+## Ver localmente
+
+A busca carrega as páginas por `fetch`, então abra por um servidor, não pelo arquivo:
 
 ```bash
-pnpm db:generate
+python3 -m http.server 8000
 ```
 
-As migrações versionadas ficam em `drizzle/`.
+e acesse http://localhost:8000.
 
-## Variáveis de ambiente
+## Publicação
 
-Consulte `.env.example`. Credenciais nunca devem ser enviadas ao GitHub.
+O GitHub Pages serve a branch `main`, pasta raiz. Cada push na `main` publica em cerca de um minuto.
 
-- `DATABASE_URL` — conexão PostgreSQL agrupada para a aplicação
-- `DATABASE_URL_UNPOOLED` — conexão direta para migrações
-- `AWS_ACCESS_KEY_ID` e `AWS_SECRET_ACCESS_KEY` — credencial do armazenamento
-- `AWS_ENDPOINT_URL_S3`, `AWS_REGION` e `SUBMISSIONS_BUCKET` — configuração do bucket
-- `NEXT_PUBLIC_SITE_URL` — origem pública do site
+O app anterior (Next.js com banco Neon e formulário de envio) está no histórico, até o commit `2923a96`.
 
-## Conteúdo e publicação
+## Melhorias futuras
 
-O site não inclui eventos, registros, bibliografias ou produções fictícias. Ausências aparecem como **Conteúdo em construção**. Produções só são públicas quando possuem o status `approved`; submissões sempre entram como `received`.
+### Calendário lido do Google Agenda
 
-A Carta de Princípios está publicada integralmente em `/o-discurso`, preservando a estrutura e a terminologia do documento oficial fornecido ao projeto.
+Hoje as datas ficam fixas em `data-encontros` e cada mudança pede um commit. A ideia é ler os encontros de uma agenda pública do Google Agenda, para atualizar pelo celular e o site refletir na hora.
 
-## Segurança do formulário
-
-- validação server-side com Zod;
-- texto tratado como conteúdo simples, sem renderização de HTML arbitrário;
-- anexos privados com tipos permitidos e limite de 5 MB;
-- proteção de origem, campo antispam e limite de três envios por hora;
-- mensagens de erro sem exposição de credenciais ou detalhes internos.
-
-## Administração futura
-
-O modelo de dados e os estados editoriais já sustentam uma futura área `/admin` para eventos, registros, bibliografia, produções e revisão de submissões. Autenticação e interface administrativa não fazem parte deste MVP.
+- Ler pela API do Google Calendar (`calendars/{id}/events?singleEvents=true&timeMin=...`). Ela aceita chamadas do navegador vindas de `resende-g.github.io`. O link `.ics` público não serve: o Google não libera a leitura dele por outro site (sem CORS).
+- O que falta: o ID de uma agenda pública (com "ver todos os detalhes do evento") e uma chave de API num projeto pessoal do Google Cloud, com a Calendar API ativada e a chave restrita ao endereço `resende-g.github.io/*` e só a essa API. A chave fica visível no código da página, o que é normal nesse uso; a restrição limita quem pode usá-la.
+- Com isso dá para mostrar horário, tema (título do evento) e local, seguir eventos que se repetem toda semana e pôr um botão para os membros assinarem a agenda.
+- Manter `data-encontros` como reserva caso a API falhe.

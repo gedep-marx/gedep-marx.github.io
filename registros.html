@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registros — GEDEP</title>
+  <meta name="description" content="Registros dos encontros do GEDEP.">
+  <link rel="icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Inter:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="estilo.css">
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="barra">
+      <a class="marca" href="index.html">
+        <img src="img/logo.png" alt="" width="251" height="251">
+        <span><strong>GEDEP</strong><small>Grupo de Estudos Direito &amp; Economia Política</small></span>
+      </a>
+      <nav aria-label="Principal">
+        <a href="index.html#sobre">Sobre</a>
+        <a href="discurso.html">Discurso</a>
+        <a href="index.html#calendario">Calendário</a>
+        <a href="registros.html" aria-current="page">Registros</a>
+        <a href="producao.html">Produção</a>
+        <a href="index.html#contato">Contato</a>
+      </nav>
+    </div>
+    <form class="busca" role="search">
+      <label class="oculto" for="q">Buscar no site</label>
+      <input id="q" name="q" type="search" placeholder="Buscar" autocomplete="off">
+      <button type="submit" aria-label="Buscar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg></button>
+      <div class="resultados" aria-live="polite" hidden></div>
+    </form>
+  </header>
+
+  <main class="pagina">
+    <h1><img class="traco" src="img/traco.png" alt="" width="2122" height="372">Registros</h1>
+    <div class="vazio">
+      <p>Os registros dos encontros vão ficar aqui.</p>
+      <p>Enquanto isso, acompanhe o grupo no Instagram: <a href="https://www.instagram.com/gedep.marx/">@gedep.marx</a>.</p>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p class="faixa"><span lang="de">Aufheben</span><img src="img/estrela.png" alt="" width="2170" height="1670"><span>Superar</span><img src="img/estrela.png" alt="" width="2170" height="1670"><span>Suprassumir</span><img src="img/estrela.png" alt="" width="2170" height="1670"><span>Abolir</span><img src="img/estrela.png" alt="" width="2170" height="1670"><span>Tornar obsoleto</span></p>
+  </footer>
+</body>
+</html>

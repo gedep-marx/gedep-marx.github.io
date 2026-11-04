@@ -1,0 +1,383 @@
+:root {
+  --preto: #000;
+  --tinta: #282828;
+  --texto: #3c3939;
+  --pilula: #767676;
+  --barra: #ececec;
+  --vermelho: #ff3131;
+  --display: "Archivo Black", "Arial Black", sans-serif;
+  --corpo: "Inter", system-ui, sans-serif;
+  --mono: "Space Mono", ui-monospace, monospace;
+  --faixa: "Bebas Neue", Impact, sans-serif;
+  --rotulo: Arial, Helvetica, sans-serif;
+  --estrela: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--preto);
+  font: 400 1rem/1.5 var(--corpo);
+}
+
+img { max-width: 100%; height: auto; }
+h1, h2, p { margin: 0; }
+
+a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible {
+  outline: 3px solid var(--vermelho);
+  outline-offset: 3px;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.topo, main, .rodape {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 40px);
+}
+
+/* Cabeçalho */
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.25rem;
+  padding-block: 1.25rem;
+}
+
+.barra {
+  flex: 0 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem 1.25rem;
+  padding: .45rem 1.25rem .45rem .45rem;
+  background: var(--barra);
+  border-radius: 3rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.marca img { width: 3.6rem; border-radius: 50%; }
+.marca strong { display: block; font: 2.7rem/.9 var(--display); }
+.marca small { display: block; max-width: 24ch; font: 700 .58rem/1.2 var(--mono); }
+
+.barra nav { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.barra nav a {
+  padding: .75rem 1rem;
+  background: var(--pilula);
+  border-radius: 2rem;
+  color: #fff;
+  font: 700 .95rem/1 var(--rotulo);
+  text-align: center;
+  text-decoration: none;
+}
+
+.barra nav a:hover, .barra nav a[aria-current="page"] { background: var(--tinta); }
+
+.busca { position: relative; flex: 1 1 15rem; max-width: 25rem; margin-left: auto; }
+
+.busca input {
+  width: 100%;
+  height: 3.6rem;
+  padding: 0 3.6rem 0 1.5rem;
+  background: var(--barra);
+  border: 3px solid #cfcfcf;
+  border-radius: 2rem;
+  font: inherit;
+}
+
+.busca button {
+  position: absolute;
+  top: 50%;
+  right: .7rem;
+  translate: 0 -50%;
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: .35rem;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.busca svg { fill: none; stroke: var(--preto); stroke-width: 2.5; stroke-linecap: round; }
+
+.resultados {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + .5rem);
+  right: 0;
+  left: 0;
+  max-height: 70vh;
+  overflow: auto;
+  padding: .5rem;
+  background: #fff;
+  border: 3px solid var(--preto);
+}
+
+.resultados a { display: block; padding: .6rem; color: inherit; text-decoration: none; }
+.resultados a:hover { background: var(--barra); }
+.resultados strong { display: block; font: 700 .9rem var(--rotulo); }
+.resultados span { font-size: .85rem; color: var(--texto); }
+.resultados mark { background: none; color: var(--vermelho); font-weight: 700; }
+.resultados p { padding: .6rem; font-size: .9rem; }
+
+/* Abertura: no celular empilha; em tela larga vira o cartaz (ver media queries) */
+
+.abertura {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "marx lema" "bloco bloco";
+  gap: 2rem 1rem;
+  padding-block: 1.5rem 3rem;
+}
+
+.lema {
+  --cap: clamp(4.2rem, 17vw, 6rem);
+  grid-area: lema;
+  width: calc(var(--cap) * 1.05);
+  font: var(--cap)/1 var(--display);
+  text-transform: uppercase;
+}
+
+.lema span { display: block; }
+.lema-ler, .lema-de { font-size: .26em; line-height: 1; text-align: right; }
+.lema-capital { margin: .02em auto; writing-mode: vertical-rl; line-height: .82; }
+.lema-luz { margin-top: .4rem; font: 700 calc(var(--cap) * .15)/1.15 var(--mono); text-align: center; text-transform: none; }
+
+.marx { grid-area: marx; align-self: center; justify-self: center; width: 100%; max-width: 22rem; }
+
+.bloco {
+  grid-area: bloco;
+  display: grid;
+  grid-template-areas: "quem" "grade" "como" "caixa" "contato";
+}
+
+.quem { grid-area: quem; position: relative; }
+.quem-texto { position: absolute; top: 0; left: 0; width: 60%; }
+.quem h2 { font: clamp(1.5rem, 6vw, 2rem)/.88 var(--display); text-transform: uppercase; }
+.setas { width: 1.3em; height: .32em; vertical-align: .1em; }
+.setas .vazada { fill: none; stroke: var(--preto); stroke-width: .8; }
+.quem p { margin-top: .5rem; color: var(--texto); font-size: clamp(.82rem, 3.6vw, .95rem); line-height: 1.2; }
+.colagem { display: block; width: 100%; }
+.grade { grid-area: grade; display: block; width: 100%; border: 3px solid var(--preto); }
+
+.como { grid-area: como; margin-top: 2.5rem; font: clamp(2.3rem, 10vw, 3.7rem)/.88 var(--display); }
+.como, .local-titulo h2 { text-align: right; text-transform: uppercase; }
+.linha { display: flex; justify-content: flex-end; align-items: center; gap: .15em; }
+.traco { width: auto; height: .62em; }
+
+.caixa {
+  grid-area: caixa;
+  display: grid;
+  align-content: center;
+  margin-top: .5rem;
+  padding: .8rem 1.1rem;
+  border: 3px solid var(--preto);
+  font-size: .93rem;
+  font-weight: 300;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.contato { grid-area: contato; display: flex; align-items: center; gap: 1rem; margin-top: .75rem; }
+
+.pilula {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 4.6rem;
+  padding: .6rem 0 .6rem 1.4rem;
+  background: var(--barra);
+  border-radius: 2.3rem;
+}
+
+.pilula ul { list-style: none; margin: 0; padding: 0; }
+
+.pilula a {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding-block: .15rem;
+  color: var(--tinta);
+  font: 700 .88rem/1.3 var(--rotulo);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.pilula a:hover { color: var(--vermelho); }
+.pilula a svg { flex: none; width: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2; }
+.pilula a svg .cheio { fill: currentColor; stroke: none; }
+.faisca { width: 2.8rem; margin-left: auto; fill: var(--preto); }
+.faisca .risco { fill: none; stroke: var(--preto); stroke-width: 1; }
+.esfera { width: 4.2rem; margin-right: -.6rem; }
+.livros { width: 5.5rem; }
+
+/* Local e calendário */
+
+.encontros {
+  display: grid;
+  gap: 3rem;
+  padding-block: 2rem 4rem;
+}
+
+.local, .agenda { display: grid; row-gap: 1rem; align-content: start; }
+
+.local-titulo { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; }
+.local-titulo h2, .agenda h2 { color: var(--tinta); font: 700 clamp(1.3rem, 5.5vw, 2.15rem)/1.1 var(--rotulo); text-transform: uppercase; }
+.globo { width: 2.4em; font-size: clamp(1.3rem, 5.5vw, 2.15rem); }
+
+.local iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+
+.legenda { display: flex; align-items: center; gap: .3rem; margin-top: .5rem; }
+.legenda i { flex: 1 1 0; max-width: 3.6rem; aspect-ratio: 1; background: var(--preto); clip-path: var(--estrela); }
+.legenda .vermelha { margin-left: .4rem; background: var(--vermelho); }
+.legenda span { color: var(--vermelho); font: 700 .9rem var(--corpo); white-space: nowrap; }
+
+.calendario table { width: calc(100% + 8px); margin: 0 -4px; border-spacing: 4px; table-layout: fixed; font: 400 .85rem var(--mono); }
+
+.calendario caption {
+  margin: 0 4px;
+  padding: .9rem;
+  background: #1b1b1b;
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+.calendario th { padding-top: .3rem; font-size: .75rem; font-weight: 400; }
+
+.calendario td {
+  position: relative;
+  isolation: isolate;
+  height: clamp(2.6rem, 9vw, 3.3rem);
+  border: 3px solid var(--preto);
+  text-align: center;
+}
+
+.calendario td.fora { color: #8a8a8a; }
+
+.calendario td.encontro::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  z-index: -1;
+  background: var(--vermelho);
+  opacity: .4;
+  clip-path: var(--estrela);
+}
+
+.lista-encontros { margin: .75rem 0 0; padding-left: 1.2rem; font: 400 .9rem/1.6 var(--mono); }
+.lista-encontros li::marker { content: "★ "; color: var(--vermelho); }
+
+/* Rodapé */
+
+.rodape { padding-block: 0 2.5rem; }
+
+.faixa {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem 1rem;
+  padding-top: 1.5rem;
+  border-top: 4px solid var(--preto);
+  font: clamp(1.5rem, 3vw, 2.3rem)/1 var(--faixa);
+  text-transform: uppercase;
+}
+
+.faixa img { width: 2.3rem; }
+
+/* Páginas internas */
+
+.pagina { padding-block: 3rem 5rem; }
+.pagina > * { max-width: 44rem; }
+
+.pagina h1 { display: flex; flex-wrap: wrap; align-items: center; gap: .2em; font: clamp(1.9rem, 8.5vw, 4rem)/.9 var(--display); text-transform: uppercase; }
+.pagina h1 .traco { height: .55em; }
+.pagina .sub { margin-top: .8rem; font: 700 1rem var(--mono); }
+.pagina h2 { margin: 3rem 0 1rem; font: clamp(1.5rem, 5vw, 2rem)/1 var(--display); text-transform: uppercase; }
+.pagina h3 { margin: 2rem 0 .5rem; font: 700 1.1rem var(--rotulo); text-transform: uppercase; }
+.pagina p, .pagina li { font-size: 1.05rem; line-height: 1.65; }
+.pagina p + p { margin-top: 1rem; }
+.pagina ol { padding-left: 1.6rem; }
+.pagina li + li { margin-top: .7rem; }
+.pagina li::marker { color: var(--vermelho); font: 700 1rem var(--mono); }
+.pagina a { color: inherit; font-weight: 700; }
+
+.indice { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+.indice a { padding: .6rem 1.1rem; border: 3px solid var(--preto); border-radius: 2rem; font: 700 .9rem var(--rotulo); text-decoration: none; }
+.indice a:hover { background: var(--preto); color: #fff; }
+
+.vazio { margin-top: 2rem; padding: 1.5rem; border: 3px solid var(--preto); }
+
+/* Telas médias: abertura em duas colunas; mapa e calendário lado a lado, títulos e conteúdo nas mesmas linhas */
+
+@media (min-width: 700px) {
+  .encontros { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; row-gap: 1rem; }
+  .local, .agenda { grid-row: span 2; grid-template-rows: subgrid; }
+  .local-titulo, .agenda-titulo { align-self: end; }
+  .local-titulo h2, .agenda h2, .globo { font-size: clamp(1.3rem, 2.5vw, 2.15rem); }
+  .local iframe { aspect-ratio: auto; height: 100%; min-height: 18rem; }
+
+  .lema { --cap: 4.4rem; }
+
+  /* Colagem e caixa terminam na mesma linha; grade e contato ficam lado a lado embaixo. */
+  .bloco {
+    grid-template-columns: 27fr 43fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "quem como" "quem caixa" "grade contato";
+  }
+
+  .colagem { height: 100%; object-fit: cover; object-position: 85% 100%; }
+  .quem h2 { font-size: clamp(1.1rem, 2.3vw, 1.8rem); }
+  .quem p { font-size: clamp(.72rem, 1.05vw, .82rem); }
+  .como { margin: 0; padding-bottom: .4rem; font-size: clamp(2rem, 4.2vw, 3.3rem); }
+  .caixa { margin: 0; padding: .55rem .8rem; font-size: clamp(.75rem, 1.02vw, .8rem); line-height: 1.32; }
+  .contato { align-self: start; gap: .75rem; margin: .6rem 0 0; }
+  .pilula ul { flex: none; }
+  .livros { width: 4.5rem; }
+}
+
+/* Telas largas: Marx e o lema entram ao lado, como no cartaz */
+
+@media (min-width: 1000px) {
+  .abertura {
+    grid-template-columns: 70fr 17fr 11fr;
+    grid-template-areas: "bloco marx lema";
+    align-items: start;
+    gap: 0 1.5rem;
+    padding-block: 2rem 3rem;
+  }
+
+  .lema { --cap: min(6.5vw, 5.1rem); justify-self: end; }
+  .marx { align-self: center; max-width: none; }
+}
+
+@media (max-width: 599px) {
+  .faisca, .livros { display: none; }
+  .pilula { gap: .5rem; }
+  .esfera { width: 3.4rem; margin-left: auto; }
+  .faixa { justify-content: center; gap: .5rem 1.25rem; }
+  .faixa img { display: none; }
+}
