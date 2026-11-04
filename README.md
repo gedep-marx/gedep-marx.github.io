@@ -33,7 +33,7 @@ e acesse http://localhost:8000.
 
 ## Publicação
 
-O GitHub Pages serve a branch `main`, pasta raiz. Cada push na `main` publica em cerca de um minuto.
+O site fica em https://gedep-marx.github.io/. O GitHub Pages serve a branch `main`, pasta raiz. Cada push na `main` publica em cerca de um minuto.
 
 O app anterior (Next.js com banco Neon e formulário de envio) está no histórico, até o commit `2923a96`.
 
@@ -43,7 +43,7 @@ O app anterior (Next.js com banco Neon e formulário de envio) está no históri
 
 Hoje as datas ficam fixas em `data-encontros` e cada mudança pede um commit. A ideia é ler os encontros de uma agenda pública do Google Agenda, para atualizar pelo celular e o site refletir na hora.
 
-- Ler pela API do Google Calendar (`calendars/{id}/events?singleEvents=true&timeMin=...`). Ela aceita chamadas do navegador vindas de `resende-g.github.io`. O link `.ics` público não serve: o Google não libera a leitura dele por outro site (sem CORS).
-- O que falta: o ID de uma agenda pública (com "ver todos os detalhes do evento") e uma chave de API num projeto pessoal do Google Cloud, com a Calendar API ativada e a chave restrita ao endereço `resende-g.github.io/*` e só a essa API. A chave fica visível no código da página, o que é normal nesse uso; a restrição limita quem pode usá-la.
+- Ler pela API do Google Calendar (`calendars/{id}/events?singleEvents=true&timeMin=...`). Ela aceita chamadas feitas pelo navegador a partir do site. O link `.ics` público não serve: o Google não libera a leitura dele por outro site (sem CORS).
+- O que falta: o ID de uma agenda pública (com "ver todos os detalhes do evento") e uma chave de API num projeto pessoal do Google Cloud, com a Calendar API ativada e a chave restrita ao endereço `gedep-marx.github.io/*` e só a essa API. A chave fica visível no código da página, o que é normal nesse uso; a restrição limita quem pode usá-la.
 - Com isso dá para mostrar horário, tema (título do evento) e local, seguir eventos que se repetem toda semana e pôr um botão para os membros assinarem a agenda.
 - Manter `data-encontros` como reserva caso a API falhe.
