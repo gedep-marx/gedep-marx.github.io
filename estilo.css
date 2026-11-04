@@ -93,7 +93,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 .barra nav a:hover, .barra nav a[aria-current="page"] { background: var(--tinta); }
 
-.busca { position: relative; flex: 1 1 15rem; }
+.busca { position: relative; flex: 1 1 15rem; max-width: 25rem; margin-left: auto; }
 
 .busca input {
   width: 100%;
@@ -142,14 +142,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .resultados mark { background: none; color: var(--vermelho); font-weight: 700; }
 .resultados p { padding: .6rem; font-size: .9rem; }
 
-/* Abertura */
+/* Abertura: no celular empilha; em tela larga vira o cartaz (ver media queries) */
 
 .abertura {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas: "marx lema" "quem quem" "como como";
-  gap: 2.5rem 1rem;
-  padding-block: 2rem 4rem;
+  grid-template-areas: "marx lema" "bloco bloco";
+  gap: 2rem 1rem;
+  padding-block: 1.5rem 3rem;
 }
 
 .lema {
@@ -165,25 +165,32 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .lema-capital { margin: .02em auto; writing-mode: vertical-rl; line-height: .82; }
 .lema-luz { margin-top: .4rem; font: 700 calc(var(--cap) * .15)/1.15 var(--mono); text-align: center; text-transform: none; }
 
-.marx { grid-area: marx; align-self: center; width: 100%; max-width: 22rem; }
+.marx { grid-area: marx; align-self: center; justify-self: center; width: 100%; max-width: 22rem; }
 
-.quem { grid-area: quem; position: relative; max-width: 30rem; }
+.bloco {
+  grid-area: bloco;
+  display: grid;
+  grid-template-areas: "quem" "grade" "como" "caixa" "contato";
+}
+
+.quem { grid-area: quem; position: relative; }
 .quem-texto { position: absolute; top: 0; left: 0; width: 60%; }
 .quem h2 { font: clamp(1.5rem, 6vw, 2rem)/.88 var(--display); text-transform: uppercase; }
 .setas { width: 1.3em; height: .32em; vertical-align: .1em; }
 .setas .vazada { fill: none; stroke: var(--preto); stroke-width: .8; }
 .quem p { margin-top: .5rem; color: var(--texto); font-size: clamp(.82rem, 3.6vw, .95rem); line-height: 1.2; }
 .colagem { display: block; width: 100%; }
-.grade { display: block; width: 100%; border: 3px solid var(--preto); }
+.grade { grid-area: grade; display: block; width: 100%; border: 3px solid var(--preto); }
 
-.como { grid-area: como; }
-
-.como h2, .local-titulo h2 { text-align: right; text-transform: uppercase; }
-.como h2 { font: clamp(2.3rem, 10vw, 3.7rem)/.88 var(--display); }
+.como { grid-area: como; margin-top: 2.5rem; font: clamp(2.3rem, 10vw, 3.7rem)/.88 var(--display); }
+.como, .local-titulo h2 { text-align: right; text-transform: uppercase; }
 .linha { display: flex; justify-content: flex-end; align-items: center; gap: .15em; }
 .traco { width: auto; height: .62em; }
 
 .caixa {
+  grid-area: caixa;
+  display: grid;
+  align-content: center;
   margin-top: .5rem;
   padding: .8rem 1.1rem;
   border: 3px solid var(--preto);
@@ -193,7 +200,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   text-align: center;
 }
 
-.contato { display: flex; align-items: center; gap: 1.5rem; margin-top: .7rem; }
+.contato { grid-area: contato; display: flex; align-items: center; gap: 1rem; margin-top: .75rem; }
 
 .pilula {
   position: relative;
@@ -231,29 +238,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 .encontros {
   display: grid;
-  gap: 4rem;
-  padding-block: 3rem 5rem;
+  gap: 3rem;
+  padding-block: 2rem 4rem;
 }
+
+.local, .agenda { display: grid; row-gap: 1rem; align-content: start; }
 
 .local-titulo { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; }
-.local-titulo h2, .agenda h2 { color: var(--tinta); font: 700 clamp(1.4rem, 5.5vw, 2.15rem)/1.1 var(--rotulo); text-transform: uppercase; }
-.globo { width: clamp(3rem, 12vw, 5rem); }
+.local-titulo h2, .agenda h2 { color: var(--tinta); font: 700 clamp(1.3rem, 5.5vw, 2.15rem)/1.1 var(--rotulo); text-transform: uppercase; }
+.globo { width: 2.4em; font-size: clamp(1.3rem, 5.5vw, 2.15rem); }
 
-.local iframe {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  margin-top: 1rem;
-  border: 0;
-}
+.local iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
 
-
-.legenda { display: flex; align-items: center; gap: .3rem; margin-block: .5rem 1rem; }
-.legenda i { width: clamp(2rem, 9vw, 3.6rem); aspect-ratio: 1; background: var(--preto); clip-path: var(--estrela); }
+.legenda { display: flex; align-items: center; gap: .3rem; margin-top: .5rem; }
+.legenda i { flex: 1 1 0; max-width: 3.6rem; aspect-ratio: 1; background: var(--preto); clip-path: var(--estrela); }
 .legenda .vermelha { margin-left: .4rem; background: var(--vermelho); }
 .legenda span { color: var(--vermelho); font: 700 .9rem var(--corpo); white-space: nowrap; }
 
-.calendario table { width: 100%; border-spacing: 4px; table-layout: fixed; font: 400 .85rem var(--mono); }
+.calendario table { width: calc(100% + 8px); margin: 0 -4px; border-spacing: 4px; table-layout: fixed; font: 400 .85rem var(--mono); }
 
 .calendario caption {
   margin: 0 4px;
@@ -267,6 +269,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 .calendario td {
   position: relative;
+  isolation: isolate;
   height: clamp(2.6rem, 9vw, 3.3rem);
   border: 3px solid var(--preto);
   text-align: center;
@@ -284,9 +287,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   clip-path: var(--estrela);
 }
 
-.calendario td { isolation: isolate; }
-
-.lista-encontros { margin: 1rem 0 0; padding-left: 1.2rem; font: 400 .9rem/1.6 var(--mono); }
+.lista-encontros { margin: .75rem 0 0; padding-left: 1.2rem; font: 400 .9rem/1.6 var(--mono); }
 .lista-encontros li::marker { content: "★ "; color: var(--vermelho); }
 
 /* Rodapé */
@@ -312,7 +313,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .pagina { padding-block: 3rem 5rem; }
 .pagina > * { max-width: 44rem; }
 
-.pagina h1 { display: flex; flex-wrap: wrap; align-items: center; gap: .2em; font: clamp(1.9rem, 8.5vw, 5rem)/.9 var(--display); text-transform: uppercase; }
+.pagina h1 { display: flex; flex-wrap: wrap; align-items: center; gap: .2em; font: clamp(1.9rem, 8.5vw, 4rem)/.9 var(--display); text-transform: uppercase; }
 .pagina h1 .traco { height: .55em; }
 .pagina .sub { margin-top: .8rem; font: 700 1rem var(--mono); }
 .pagina h2 { margin: 3rem 0 1rem; font: clamp(1.5rem, 5vw, 2rem)/1 var(--display); text-transform: uppercase; }
@@ -330,32 +331,53 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 .vazio { margin-top: 2rem; padding: 1.5rem; border: 3px solid var(--preto); }
 
-/* Telas largas: composição do cartaz */
+/* Telas médias: abertura em duas colunas; mapa e calendário lado a lado, títulos e conteúdo nas mesmas linhas */
 
 @media (min-width: 700px) {
-  .encontros { grid-template-columns: 1fr 1fr; align-items: end; }
+  .encontros { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; row-gap: 1rem; }
+  .local, .agenda { grid-row: span 2; grid-template-rows: subgrid; }
+  .local-titulo, .agenda-titulo { align-self: end; }
+  .local-titulo h2, .agenda h2, .globo { font-size: clamp(1.3rem, 2.5vw, 2.15rem); }
+  .local iframe { aspect-ratio: auto; height: 100%; min-height: 18rem; }
+
+  .lema { --cap: 4.4rem; }
+
+  /* Colagem e caixa terminam na mesma linha; grade e contato ficam lado a lado embaixo. */
+  .bloco {
+    grid-template-columns: 27fr 43fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "quem como" "quem caixa" "grade contato";
+  }
+
+  .colagem { height: 100%; object-fit: cover; object-position: 85% 100%; }
+  .quem h2 { font-size: clamp(1.1rem, 2.3vw, 1.8rem); }
+  .quem p { font-size: clamp(.72rem, 1.05vw, .82rem); }
+  .como { margin: 0; padding-bottom: .4rem; font-size: clamp(2rem, 4.2vw, 3.3rem); }
+  .caixa { margin: 0; padding: .55rem .8rem; font-size: clamp(.75rem, 1.02vw, .8rem); line-height: 1.32; }
+  .contato { align-self: start; gap: .75rem; margin: .6rem 0 0; }
+  .pilula ul { flex: none; }
+  .livros { width: 4.5rem; }
 }
+
+/* Telas largas: Marx e o lema entram ao lado, como no cartaz */
 
 @media (min-width: 1000px) {
   .abertura {
-    grid-template-columns: 27fr 43fr 18fr 10fr;
-    grid-template-areas: "quem como marx lema";
-    gap: 0;
-    padding-block: 3rem 5rem;
+    grid-template-columns: 70fr 17fr 11fr;
+    grid-template-areas: "bloco marx lema";
+    align-items: start;
+    gap: 0 1.5rem;
+    padding-block: 2rem 3rem;
   }
 
-  .lema { --cap: min(8.2vw, 6.3rem); justify-self: end; }
-  .marx { align-self: start; margin-top: 5.5rem; padding-left: 1rem; }
-  .quem { max-width: none; margin-top: 4rem; }
-  .quem h2 { font-size: min(2.3vw, 1.9rem); }
-  .quem p { font-size: min(1.05vw, .88rem); }
-  .como { margin-top: 2rem; }
-  .como h2 { font-size: min(5vw, 4rem); }
-  .caixa { font-size: min(1.12vw, .93rem); }
+  .lema { --cap: min(6.5vw, 5.1rem); justify-self: end; }
+  .marx { align-self: center; max-width: none; }
 }
 
 @media (max-width: 599px) {
   .faisca, .livros { display: none; }
   .pilula { gap: .5rem; }
   .esfera { width: 3.4rem; margin-left: auto; }
+  .faixa { justify-content: center; gap: .5rem 1.25rem; }
+  .faixa img { display: none; }
 }
