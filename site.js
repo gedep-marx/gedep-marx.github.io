@@ -30,9 +30,11 @@ if (calendario) {
   </table>`;
 
   const formato = { weekday: "long", day: "numeric", month: "long" };
+  const quando = (d) => `<time datetime="${d}">${new Date(`${d}T12:00`).toLocaleDateString("pt-BR", formato)}</time>`;
+  const ultimo = datas.filter((d) => d < hoje).at(-1);
   document.querySelector(".lista-encontros").innerHTML = proximas.length
-    ? proximas.map((d) => `<li><time datetime="${d}">${new Date(`${d}T12:00`).toLocaleDateString("pt-BR", formato)}</time></li>`).join("")
-    : "<li>Nenhum encontro marcado. Acompanhe o Instagram @gedep.marx.</li>";
+    ? proximas.map((d) => `<li>${quando(d)}</li>`).join("")
+    : `${ultimo ? `<li>Último encontro: ${quando(ultimo)}</li>` : ""}<li>Próxima data em breve no Instagram @gedep.marx</li>`;
 }
 
 // Busca: procura o termo no texto das páginas do site (sem acento, sem maiúscula).
