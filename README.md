@@ -16,10 +16,10 @@ Site do GEDEP (Faculdade de Direito da UFBA), publicado pelo GitHub Pages. HTML,
 No `index.html`, edite o atributo `data-encontros` (datas `AAAA-MM-DD` separadas por espaço):
 
 ```html
-<div class="calendario" data-encontros="2026-11-19 2026-11-26"></div>
+<div class="calendario" data-encontros="2026-10-31"></div>
 ```
 
-O calendário abre no mês do próximo encontro e marca cada data com uma estrela; a lista abaixo dele mostra só as datas que ainda não passaram.
+O calendário abre no mês do próximo encontro e marca cada data com uma estrela; a lista abaixo dele mostra só as datas que ainda não passaram. Sem data futura, o calendário mostra o mês atual e a lista mostra o último encontro. Para marcar um novo encontro, acrescente a data no fim da lista.
 
 ## Ver localmente
 
