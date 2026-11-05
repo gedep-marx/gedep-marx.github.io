@@ -232,7 +232,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .pilula a svg .cheio { fill: currentColor; stroke: none; }
 .faisca { width: 2.8rem; margin-left: auto; fill: var(--preto); }
 .faisca .risco { fill: none; stroke: var(--preto); stroke-width: 1; }
-.esfera { width: 4.2rem; margin-right: -.6rem; }
+.esfera { width: 4.2rem; margin-right: 1.2rem; }
 .livros { width: 4.5rem; }
 
 /* Local e calendário */
