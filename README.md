@@ -4,12 +4,13 @@ Site do GEDEP (Faculdade de Direito da UFBA), publicado pelo GitHub Pages. HTML,
 
 ## Arquivos
 
-- `index.html` — início: quem somos, como atuamos, contato, mapa e calendário
+- `index.html` — início: quem somos, como atuamos, contato, citação de Pachukanis, mapa e calendário
 - `discurso.html` — Carta de Princípios
 - `registros.html` e `producao.html` — em construção
 - `estilo.css` — todo o visual
-- `site.js` — busca
 - `img/` — imagens recortadas do layout feito no Canva
+
+O menu do celular (hambúrguer) é um `popover` nativo do HTML, sem JavaScript.
 
 ## Atualizar os encontros
 
@@ -19,7 +20,7 @@ Abaixo da agenda há um link para quem quiser seguir a agenda no próprio Google
 
 ## Ver localmente
 
-A busca carrega as páginas por `fetch`, então abra por um servidor, não pelo arquivo:
+Rode um servidor na pasta do site:
 
 ```bash
 python3 -m http.server 8000

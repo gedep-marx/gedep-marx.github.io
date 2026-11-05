@@ -4,9 +4,11 @@
   --texto: #3c3939;
   --pilula: #767676;
   --barra: #ececec;
+  --caixa: #e3e3e3;
   --vermelho: #ff3131;
   --display: "Archivo Black", "Arial Black", sans-serif;
   --corpo: "Inter", system-ui, sans-serif;
+  --serifa: "Times New Roman", Times, serif;
   --mono: "Space Mono", ui-monospace, monospace;
   --faixa: "Bebas Neue", Impact, sans-serif;
   --rotulo: Arial, Helvetica, sans-serif;
@@ -26,7 +28,7 @@ body {
 img { max-width: 100%; height: auto; }
 h1, h2, p { margin: 0; }
 
-a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible {
+a:focus-visible, button:focus-visible, iframe:focus-visible {
   outline: 3px solid var(--vermelho);
   outline-offset: 3px;
 }
@@ -48,21 +50,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 /* Cabeçalho */
 
-.topo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.25rem;
-  padding-block: 1.25rem;
-}
+.topo { padding-block: 1.25rem; }
 
 .barra {
-  flex: 0 1 auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: .75rem 1.25rem;
-  padding: .45rem 1.25rem .45rem .45rem;
+  padding: .45rem;
   background: var(--barra);
   border-radius: 3rem;
 }
@@ -79,7 +74,32 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .marca strong { display: block; font: 2.7rem/.9 var(--display); }
 .marca small { display: block; max-width: 24ch; font: 700 .58rem/1.2 var(--mono); }
 
-.barra nav { display: flex; flex-wrap: wrap; gap: .5rem; }
+.menu {
+  display: grid;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: .75rem;
+  background: var(--pilula);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.menu svg { fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; }
+
+/* No celular o menu é um popover nativo: abre pelo botão e fecha com Esc ou clique fora */
+.barra nav:popover-open {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  inset: 6rem clamp(16px, 3vw, 40px) auto auto;
+  margin: 0;
+  padding: .75rem;
+  background: var(--barra);
+  border: 0;
+  border-radius: 1.6rem;
+  box-shadow: 0 .5rem 1.5rem #0003;
+}
 
 .barra nav a {
   padding: .75rem 1rem;
@@ -93,61 +113,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 .barra nav a:hover, .barra nav a[aria-current="page"] { background: var(--tinta); }
 
-.busca { position: relative; flex: 1 1 15rem; max-width: 25rem; margin-left: auto; }
+/* Início: no celular empilha, com o lema ao lado da citação e do busto */
 
-.busca input {
-  width: 100%;
-  height: 3.6rem;
-  padding: 0 3.6rem 0 1.5rem;
-  background: var(--barra);
-  border: 3px solid #cfcfcf;
-  border-radius: 2rem;
-  font: inherit;
-}
-
-.busca button {
-  position: absolute;
-  top: 50%;
-  right: .7rem;
-  translate: 0 -50%;
-  display: grid;
-  width: 2.6rem;
-  height: 2.6rem;
-  padding: .35rem;
-  background: none;
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.busca svg { fill: none; stroke: var(--preto); stroke-width: 2.5; stroke-linecap: round; }
-
-.resultados {
-  position: absolute;
-  z-index: 10;
-  top: calc(100% + .5rem);
-  right: 0;
-  left: 0;
-  max-height: 70vh;
-  overflow: auto;
-  padding: .5rem;
-  background: #fff;
-  border: 3px solid var(--preto);
-}
-
-.resultados a { display: block; padding: .6rem; color: inherit; text-decoration: none; }
-.resultados a:hover { background: var(--barra); }
-.resultados strong { display: block; font: 700 .9rem var(--rotulo); }
-.resultados span { font-size: .85rem; color: var(--texto); }
-.resultados mark { background: none; color: var(--vermelho); font-weight: 700; }
-.resultados p { padding: .6rem; font-size: .9rem; }
-
-/* Abertura: no celular empilha; em tela larga vira o cartaz (ver media queries) */
-
-.abertura {
+.inicio {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas: "marx lema" "bloco bloco";
+  grid-template-areas: "abertura abertura" "contato contato" "citacao lema" "busto lema" "encontros encontros";
   gap: 2rem 1rem;
   padding-block: 1.5rem 3rem;
 }
@@ -165,95 +136,88 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .lema-capital { margin: .02em auto; writing-mode: vertical-rl; line-height: .82; }
 .lema-luz { margin-top: .4rem; font: 700 calc(var(--cap) * .15)/1.15 var(--mono); text-align: center; text-transform: none; }
 
-/* A coluna de Marx e dos cartazes acompanha a altura da abertura sem esticá-la (contain: size) */
-.marx { grid-area: marx; align-self: stretch; width: 100%; height: 100%; aspect-ratio: auto; contain: size; object-fit: contain; }
+.abertura { grid-area: abertura; display: grid; gap: 2.5rem 1.25rem; }
 
-.bloco {
-  grid-area: bloco;
-  display: grid;
-  grid-template-areas: "quem" "grade" "como" "caixa" "contato";
-}
-
-.quem { grid-area: quem; position: relative; }
-.quem-texto { position: absolute; top: 0; left: 0; width: 60%; }
-.quem h2 { font: clamp(1.5rem, 6vw, 2rem)/.88 var(--display); text-transform: uppercase; }
+/* Brilho vermelho atrás da mão: o branco da colagem some no multiply */
+.quem { position: relative; background: radial-gradient(circle at 80% 22%, #ff31313d, transparent 42%); }
+.quem-texto { position: absolute; top: 0; left: 0; }
+.quem h2 { font: clamp(1.5rem, 9vw, 2.6rem)/.88 var(--display); text-transform: uppercase; }
 .setas { width: 1.3em; height: .32em; vertical-align: .1em; }
 .setas .vazada { fill: none; stroke: var(--preto); stroke-width: .8; }
-.quem p { margin-top: .5rem; color: var(--texto); font-size: clamp(.82rem, 3.6vw, .95rem); line-height: 1.2; }
-.colagem { display: block; width: 100%; }
-.grade { grid-area: grade; display: block; width: 100%; border: 3px solid var(--preto); }
+.quem p { max-width: 55%; margin-top: .5rem; color: var(--texto); font-size: clamp(.82rem, 3.6vw, .95rem); line-height: 1.2; }
+.colagem { display: block; width: 100%; mix-blend-mode: multiply; }
 
-.como { grid-area: como; margin-top: 2.5rem; font: clamp(2.3rem, 10vw, 3.7rem)/.88 var(--display); }
-.como, .local-titulo h2 { text-align: right; text-transform: uppercase; }
-.linha { display: flex; justify-content: flex-end; align-items: center; gap: .15em; }
-.traco { width: auto; height: .62em; }
+.como-titulo { display: flex; justify-content: space-between; align-items: flex-end; gap: .5rem; }
+.como h2 { font: clamp(2.1rem, 10vw, 3.7rem)/.88 var(--display); text-transform: uppercase; }
+.estatua { width: 30%; }
 
 .caixa {
-  grid-area: caixa;
-  display: grid;
-  align-content: center;
-  margin-top: .5rem;
-  padding: .8rem 1.1rem;
-  border: 3px solid var(--preto);
-  font-size: .93rem;
-  font-weight: 300;
-  line-height: 1.45;
-  text-align: center;
+  margin-top: .3rem;
+  padding: .4rem .7rem .9rem;
+  background: linear-gradient(#fff, var(--caixa));
+  border-radius: 1.2rem;
+  font: 1.05rem/1.38 var(--serifa);
+  text-align: justify;
+  hyphens: auto;
 }
 
-.contato { grid-area: contato; display: flex; align-items: center; gap: 1rem; margin-top: .75rem; }
-
-.pilula {
+/* Contato: cápsula com a esfera recortada na ponta direita */
+.contato {
+  grid-area: contato;
+  align-self: center;
   position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  min-height: 4.6rem;
-  padding: .6rem 0 .6rem 1.4rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "titulo faisca" "lista faisca";
+  align-content: center;
+  column-gap: 1rem;
+  min-height: 6.5rem;
+  padding: 1rem 6.2rem 1rem 1.6rem;
+  overflow: hidden;
   background: var(--barra);
-  border-radius: 2.3rem;
+  border-radius: 999px;
 }
 
-.pilula ul { list-style: none; margin: 0; padding: 0; }
+.contato h2 { grid-area: titulo; color: var(--vermelho); font: clamp(1.1rem, 5vw, 1.7rem)/1.1 var(--display); text-transform: uppercase; }
+.contato ul { grid-area: lista; list-style: none; margin: .3rem 0 0; padding: 0; }
 
-.pilula a {
+.contato a {
   display: flex;
   align-items: center;
   gap: .5rem;
   padding-block: .15rem;
   color: var(--tinta);
-  font: 700 .88rem/1.3 var(--rotulo);
+  font: clamp(.72rem, 3.2vw, 1.05rem)/1.25 var(--display);
   text-decoration: none;
   text-transform: uppercase;
 }
 
-.pilula a:hover { color: var(--vermelho); }
-.pilula a svg { flex: none; width: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2; }
-.pilula a svg .cheio { fill: currentColor; stroke: none; }
-.faisca { width: 2.8rem; margin-left: auto; fill: var(--preto); }
+.contato a:hover { color: var(--vermelho); }
+.contato a svg { flex: none; width: 1.4em; fill: none; stroke: currentColor; stroke-width: 2; }
+.contato a svg .cheio { fill: currentColor; stroke: none; }
+.faisca { grid-area: faisca; position: relative; z-index: 1; justify-self: end; align-self: start; width: 4.5rem; margin-right: -2.5rem; fill: var(--preto); }
 .faisca .risco { fill: none; stroke: var(--preto); stroke-width: 1; }
-.esfera { width: 4.2rem; margin-right: 1.2rem; }
-.livros { width: 4.5rem; }
+.esfera { position: absolute; top: 50%; right: -.4rem; height: 112%; width: auto; max-width: none; translate: 0 -50%; }
 
-/* Local e calendário */
+.citacao { grid-area: citacao; align-self: center; margin: 0; font: .78rem/1.3 var(--mono); }
+.citacao blockquote { margin: 0; text-align: justify; }
+.citacao figcaption { margin-top: .2rem; }
+.busto { grid-area: busto; width: 100%; max-width: 15rem; justify-self: center; }
 
-.encontros {
-  display: grid;
-  gap: 3rem;
-  padding-block: 2rem 4rem;
-}
+/* Local e agenda */
 
-.local, .agenda { display: grid; row-gap: 1rem; align-content: start; }
-
-.local-titulo { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; }
-.local-titulo h2, .agenda h2 { color: var(--tinta); font: 700 clamp(1.3rem, 5.5vw, 2.15rem)/1.1 var(--rotulo); text-transform: uppercase; }
-.globo { width: 2.4em; font-size: clamp(1.3rem, 5.5vw, 2.15rem); }
+.encontros { grid-area: encontros; display: grid; gap: 3rem; }
+.local, .agenda { display: grid; row-gap: .7rem; align-content: start; }
+.local h2, .agenda h2 { color: var(--tinta); font: clamp(1.05rem, 4.6vw, 1.45rem)/1.1 var(--display); text-transform: uppercase; }
+.globo { display: inline-block; width: 1.15em; vertical-align: -.2em; }
+.estrela { display: inline-block; width: .9em; aspect-ratio: 1; vertical-align: -.1em; background: var(--vermelho); clip-path: var(--estrela); }
 
 /* Mapa e agenda com o mesmo tamanho e a mesma moldura */
-.local iframe, .agenda-google iframe { display: block; width: 100%; height: clamp(22rem, 60vw, 28rem); border: 3px solid var(--preto); }
+.local iframe, .agenda iframe { display: block; width: 100%; height: clamp(20rem, 70vw, 24rem); border: 3px solid var(--preto); }
+.adorno { display: none; }
 
-.estrela { display: inline-block; width: .85em; aspect-ratio: 1; margin-left: .1em; vertical-align: -.08em; background: var(--vermelho); clip-path: var(--estrela); }
-.seguir { display: inline-block; margin-top: .6rem; color: var(--tinta); font: 700 .85rem var(--mono); }
+.seguir { display: inline-flex; align-items: center; gap: .5rem; justify-self: start; color: var(--vermelho); font: .85rem var(--display); text-transform: uppercase; }
+.seguir img { width: 2.2rem; }
 
 /* Rodapé */
 
@@ -274,6 +238,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .faixa img { width: 2.3rem; }
 
 /* Páginas internas */
+
+.traco { width: auto; height: .62em; }
 
 .pagina { padding-block: 3rem 5rem; }
 .pagina > * { max-width: 44rem; }
@@ -296,52 +262,74 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 
 .vazio { margin-top: 2rem; padding: 1.5rem; border: 3px solid var(--preto); }
 
-/* Telas médias: abertura em duas colunas; mapa e calendário lado a lado, títulos e conteúdo nas mesmas linhas */
+/* Telas médias: menu à vista, abertura em duas colunas, mapa e agenda lado a lado */
 
 @media (min-width: 700px) {
-  .encontros { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; row-gap: 1rem; }
-  .local, .agenda { grid-row: span 2; grid-template-rows: subgrid; }
-  .local-titulo, .agenda-titulo { align-self: end; }
-  .local-titulo h2, .agenda h2, .globo { font-size: clamp(1.3rem, 2.5vw, 2.15rem); }
+  .barra { width: fit-content; padding-right: 1.25rem; }
+  .menu { display: none; }
 
-  .lema { --cap: 4.4rem; }
-
-  /* Colagem e caixa terminam na mesma linha; grade e contato ficam lado a lado embaixo. */
-  .bloco {
-    grid-template-columns: 27fr 43fr;
-    grid-template-rows: auto 1fr auto;
-    grid-template-areas: "quem como" "quem caixa" "grade contato";
+  /* Fora do celular o menu fica sempre à vista, sem o comportamento de popover */
+  .barra nav {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    background: none;
+    border: 0;
+    color: inherit;
   }
 
+  .inicio {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: "abertura abertura abertura" "contato contato lema" "citacao busto lema" "encontros encontros encontros";
+  }
+
+  .lema { --cap: 4.4rem; align-self: center; }
+  .busto { width: 12rem; }
+
+  /* Colagem e caixa terminam na mesma linha */
+  .abertura { grid-template-columns: 36fr 62fr; }
   .colagem { height: 100%; object-fit: cover; object-position: 85% 100%; }
-  .quem h2 { font-size: clamp(1.1rem, 2.3vw, 1.8rem); }
-  .quem p { font-size: clamp(.72rem, 1.05vw, .82rem); }
-  .como { margin: 0; padding-bottom: .4rem; font-size: clamp(2rem, 4.2vw, 3.3rem); }
-  .caixa { margin: 0; padding: .55rem .8rem; font-size: clamp(.75rem, 1.02vw, .8rem); line-height: 1.32; }
-  /* Pílula de contato com a mesma altura da grade ao lado */
-  .contato { align-self: stretch; align-items: stretch; gap: .75rem; margin: 0 0 0 .6rem; }
-  .livros { align-self: center; }
-  .pilula ul { flex: none; }
+  .quem h2 { font-size: clamp(1.5rem, 4.4vw, 3.4rem); }
+  .quem p { font-size: clamp(.78rem, 1.5vw, 1.15rem); }
+  .como h2 { font-size: clamp(2rem, 5.5vw, 4.25rem); }
+  .caixa { font-size: clamp(.9rem, 1.85vw, 1.4rem); }
+
+  .contato { min-height: 8.5rem; padding: 1.2rem 8.5rem 1.2rem 2.2rem; }
+
+  .encontros { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; row-gap: .7rem; }
+  .local, .agenda { grid-row: span 3; grid-template-rows: subgrid; }
+  .local h2, .agenda h2 { align-self: end; }
 }
 
-/* Telas largas: Marx e o lema entram ao lado, como no cartaz */
+/* Telas largas: o cartaz inteiro, com o lema descendo à direita do contato até a agenda */
 
 @media (min-width: 1000px) {
-  .abertura {
-    grid-template-columns: 70fr 17fr 11fr;
-    grid-template-areas: "bloco marx lema";
-    align-items: start;
-    gap: 0 1.5rem;
-    padding-block: 2rem 3rem;
+  .inicio {
+    grid-template-columns: 52fr 20fr 13fr 10fr;
+    grid-template-areas: "abertura abertura abertura abertura" "contato citacao busto lema" "encontros encontros encontros lema";
+    gap: 1.5rem 1rem;
   }
 
-  .lema { --cap: min(6.5vw, 5.1rem); justify-self: end; }
+  .abertura { margin-bottom: 1.5rem; }
+  .lema { --cap: min(8vw, 5.6rem); justify-self: end; }
+  .busto { width: 100%; align-self: center; }
+  .local iframe, .agenda iframe { height: 20rem; }
+
+  /* Mapa, grade e agenda encostados, como no cartaz */
+  .encontros { grid-template-columns: 47fr 8fr 33fr; column-gap: 0; }
+  .local { grid-column: 1; }
+  .agenda { grid-column: 3; }
+  .adorno { grid-area: 2 / 2; display: flex; flex-direction: column; align-items: center; gap: .4rem; }
+  .grade { flex: 1 1 0; min-height: 0; width: 100%; object-fit: cover; border-block: 3px solid var(--preto); }
+  .livros { width: 90%; }
 }
 
 @media (max-width: 599px) {
-  .faisca, .livros { display: none; }
-  .pilula { gap: .5rem; }
-  .esfera { width: 3.4rem; margin-left: auto; }
+  .faisca { display: none; }
   .faixa { justify-content: center; gap: .5rem 1.25rem; }
   .faixa img { display: none; }
 }
