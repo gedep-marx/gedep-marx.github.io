@@ -165,7 +165,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .lema-capital { margin: .02em auto; writing-mode: vertical-rl; line-height: .82; }
 .lema-luz { margin-top: .4rem; font: 700 calc(var(--cap) * .15)/1.15 var(--mono); text-align: center; text-transform: none; }
 
-.marx { grid-area: marx; align-self: center; justify-self: center; width: 100%; max-width: 22rem; }
+/* A coluna de Marx e dos cartazes acompanha a altura da abertura sem esticá-la (contain: size) */
+.marx { grid-area: marx; align-self: stretch; width: 100%; height: 100%; aspect-ratio: auto; contain: size; object-fit: contain; }
 
 .bloco {
   grid-area: bloco;
@@ -232,7 +233,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .faisca { width: 2.8rem; margin-left: auto; fill: var(--preto); }
 .faisca .risco { fill: none; stroke: var(--preto); stroke-width: 1; }
 .esfera { width: 4.2rem; margin-right: -.6rem; }
-.livros { width: 5.5rem; }
+.livros { width: 4.5rem; }
 
 /* Local e calendário */
 
@@ -248,47 +249,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
 .local-titulo h2, .agenda h2 { color: var(--tinta); font: 700 clamp(1.3rem, 5.5vw, 2.15rem)/1.1 var(--rotulo); text-transform: uppercase; }
 .globo { width: 2.4em; font-size: clamp(1.3rem, 5.5vw, 2.15rem); }
 
-.local iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+/* Mapa e agenda com o mesmo tamanho e a mesma moldura */
+.local iframe, .agenda-google iframe { display: block; width: 100%; height: clamp(22rem, 60vw, 28rem); border: 3px solid var(--preto); }
 
-.legenda { display: flex; align-items: center; gap: .3rem; margin-top: .5rem; }
-.legenda i { flex: 1 1 0; max-width: 3.6rem; aspect-ratio: 1; background: var(--preto); clip-path: var(--estrela); }
-.legenda .vermelha { margin-left: .4rem; background: var(--vermelho); }
-.legenda span { color: var(--vermelho); font: 700 .9rem var(--corpo); white-space: nowrap; }
-
-.calendario table { width: calc(100% + 8px); margin: 0 -4px; border-spacing: 4px; table-layout: fixed; font: 400 .85rem var(--mono); }
-
-.calendario caption {
-  margin: 0 4px;
-  padding: .9rem;
-  background: #1b1b1b;
-  color: #fff;
-  font-size: 1.15rem;
-}
-
-.calendario th { padding-top: .3rem; font-size: .75rem; font-weight: 400; }
-
-.calendario td {
-  position: relative;
-  isolation: isolate;
-  height: clamp(2.6rem, 9vw, 3.3rem);
-  border: 3px solid var(--preto);
-  text-align: center;
-}
-
-.calendario td.fora { color: #8a8a8a; }
-
-.calendario td.encontro::before {
-  content: "";
-  position: absolute;
-  inset: 12%;
-  z-index: -1;
-  background: var(--vermelho);
-  opacity: .4;
-  clip-path: var(--estrela);
-}
-
-.lista-encontros { margin: .75rem 0 0; padding-left: 1.2rem; font: 400 .9rem/1.6 var(--mono); }
-.lista-encontros li::marker { content: "★ "; color: var(--vermelho); }
+.estrela { display: inline-block; width: .85em; aspect-ratio: 1; margin-left: .1em; vertical-align: -.08em; background: var(--vermelho); clip-path: var(--estrela); }
+.seguir { display: inline-block; margin-top: .6rem; color: var(--tinta); font: 700 .85rem var(--mono); }
 
 /* Rodapé */
 
@@ -338,7 +303,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   .local, .agenda { grid-row: span 2; grid-template-rows: subgrid; }
   .local-titulo, .agenda-titulo { align-self: end; }
   .local-titulo h2, .agenda h2, .globo { font-size: clamp(1.3rem, 2.5vw, 2.15rem); }
-  .local iframe { aspect-ratio: auto; height: 100%; min-height: 18rem; }
 
   .lema { --cap: 4.4rem; }
 
@@ -354,9 +318,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   .quem p { font-size: clamp(.72rem, 1.05vw, .82rem); }
   .como { margin: 0; padding-bottom: .4rem; font-size: clamp(2rem, 4.2vw, 3.3rem); }
   .caixa { margin: 0; padding: .55rem .8rem; font-size: clamp(.75rem, 1.02vw, .8rem); line-height: 1.32; }
-  .contato { align-self: start; gap: .75rem; margin: .6rem 0 0; }
+  /* Pílula de contato com a mesma altura da grade ao lado */
+  .contato { align-self: stretch; align-items: stretch; gap: .75rem; margin: 0 0 0 .6rem; }
+  .livros { align-self: center; }
   .pilula ul { flex: none; }
-  .livros { width: 4.5rem; }
 }
 
 /* Telas largas: Marx e o lema entram ao lado, como no cartaz */
@@ -371,7 +336,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, iframe:focus-visible
   }
 
   .lema { --cap: min(6.5vw, 5.1rem); justify-self: end; }
-  .marx { align-self: center; max-width: none; }
 }
 
 @media (max-width: 599px) {
